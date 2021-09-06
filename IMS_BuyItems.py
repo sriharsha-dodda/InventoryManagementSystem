@@ -19,7 +19,7 @@ def buyItem():
     # read id, quantity of each item using 
     # looped choice
     while(True):
-        print("1.Add Item to bill\n2.End Bill")
+        print(" 1.Add Item to bill\n 2.End Bill")
         buyChoice = int(input())
         if(buyChoice == 1):
             # read data: id, quantity
@@ -71,16 +71,29 @@ def buyItem():
             inventoryFile.close()
 
             # add string to bill
-            itemBillString = str(userInputID)+"\t"+str(itemName)+"\t"+str(itemDiscount)+"\t"+str(itemOriginalPrice)
+            itemBillString = str(userInputID)+"\t"+str(itemName)+"\t"+str(userInputQuantity)+"\tRs."+str(itemDiscount)+"\tRs."+str(itemOriginalPrice)
             billString += "\n"+itemBillString
 
             #Adding to final values
             totalAmount += itemPrice
             totalSavings += itemDiscount
 
-            print("Item added to bill")
+            print("*"*55)
+            print("* Item added:")
+            print("* Name:"+str(itemName))
+            print("* Quantity: "+str(userInputQuantity))
+            print("* Item Amount: Rs."+str(itemPrice))
+            print("* Present Total: Rs."+str(totalAmount))
+            print("*"*55)
+            
         elif buyChoice == 2:
-            customerPhoneNumber = int(input("Please Enter your Phone Number:"))
+            invalidPhoneNumber = True
+            while(invalidPhoneNumber):
+                customerPhoneNumber = int(input("Please Enter your Phone Number:"))
+                if(len(str(customerPhoneNumber)) !=10):
+                    print("Invalid Number!!")
+                else:
+                    invalidPhoneNumber = False
             break
     #end while loop
 
@@ -92,7 +105,7 @@ def buyItem():
     #getting Transaction id
     newTransactionID = len(salesDictionary)+1
 
-    #making new transaction string
+    #making new transaction dictionary
     newTransactionDictionary = {"amt":totalAmount, "pids":transactionItemIDList, "quants":transactionItemQuantityList, "savs":totalSavings,"phno":customerPhoneNumber}
 
     #adding it to sales.json
@@ -104,19 +117,26 @@ def buyItem():
     salesFile.write(str(salesDictionaryString))
     salesFile.close()
 
+    print("*"*55)
+    print(("*"*20)+"ABCD SuperMart"+("*"*21))
+    print(("*"*17)+"visit ABCDstore.com !"+("*"*17))
     print("TransactionID: "+str(newTransactionID))
-    print("ItemID\tName\t\tDiscount\tMRP")
+    print("Phone Number: "+str(customerPhoneNumber))
+    
+    print("ItemID\tName\t\t  Quantity    Discount    MRP")
     print(billString)
-    print("*"*50)
-    print("Total Amount: "+str(totalAmount))
-    print("Total Savings: "+str(totalSavings))
-    print("*"*50)
+    print("*"*55)
+    print("Total Amount: Rs."+str(totalAmount))
+    print("Total Savings: Rs."+str(totalSavings))
+    print("*"*55)
+    print("******Thank You For Purchasing At ABCD SuperMart*******")
+    print(("*"*19)+"Have a great day!"+("*"*19))
+    print("*"*55)
 
 
 if __name__ == "__main__":
     exitStatus=0
-    print("*"*10+"Welcome"+"*"*10)
+    print("*"*15+"Welcome to ABCD SuperMart"+"*"*15)
+    print("Please Enter Your Choice")
 
     buyItem()
-
-
